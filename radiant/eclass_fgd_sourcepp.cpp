@@ -837,6 +837,7 @@ void EClass_finalize_fgd( EntityClassCollector& collector ){
 		eclass_capture_state( eclass );
 		collector.insert( eclass );
 	}
+	g_EntityClassFGD_classes.clear();
 #if 0
 	for ( auto [ name, eclass ] : g_EntityClassFGD_classes )
 	{
