@@ -811,6 +811,7 @@ void Eclass_ScanFile_fgd( EntityClassCollector& collector, const char *filename 
 		entityClass->name_set( entityName.data() );
 		entityClass->m_comments = entity.description;
 		entityClass->has_angles = true;
+		entityClass->has_angles_key = true;
 
 		if ( entity.classType == "SolidClass" ) {
 			// solid types
