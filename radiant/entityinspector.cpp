@@ -768,7 +768,9 @@ public:
 	}
 
 	void visit( const char* key, const char* value ) override {
-		m_keyvalues.insert( KeyValues::value_type( CopiedString( key ), CopiedString( value ) ) );
+		if ( !string_equal_prefix( key, "On" ) ) {
+			m_keyvalues.insert( KeyValues::value_type( CopiedString( key ), CopiedString( value ) ) );
+		}
 	}
 };
 
