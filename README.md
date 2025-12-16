@@ -73,7 +73,7 @@ feasible.
 - Compile Maps
 - Load FGDs
 	- FIXME: Only loads them from gamepacks directory.
-	- FIXME: Doesn't load choice/list keyvalues.
+	- ~~FIXME: Doesn't load choice/list keyvalues.~~
 	- FIXME: Doesn't write default keyvalues to the saved map, like Hammer does.
 	- FIXME: Discards Source Entity I/O keys.
 
