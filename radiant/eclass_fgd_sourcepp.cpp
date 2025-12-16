@@ -75,6 +75,25 @@ static void addChoicesToEntity( EntityClass* entityClass, const std::vector<tool
 	}
 }
 
+static void addIOToEntity( EntityClass* entityClass, const std::vector<toolpp::FGD::Entity::IO>& inputs, const std::vector<toolpp::FGD::Entity::IO>& outputs ) {
+	for ( const auto& input : inputs ) {
+		EntityClassAttribute attribute;
+		attribute.m_name = input.name;
+		attribute.m_displayName = input.name;
+		attribute.m_type = input.valueType;
+		attribute.m_description = input.description;
+		EntityClass_insertInput( *entityClass, attribute.m_name.c_str(), attribute );
+	}
+	for ( const auto& output : outputs ) {
+		EntityClassAttribute attribute;
+		attribute.m_name = output.name;
+		attribute.m_displayName = output.name;
+		attribute.m_type = output.valueType;
+		attribute.m_description = output.description;
+		EntityClass_insertOutput( *entityClass, attribute.m_name.c_str(), attribute );
+	}
+}
+
 static void addFieldsToEntity( EntityClass* entityClass, const std::vector<toolpp::FGD::Entity::Field>& fields ) {
 	for ( const auto& field : fields ) {
 		EntityClassAttribute attribute;
@@ -181,6 +200,7 @@ static void addBaseAttributes( EntityClass* entityClass, const std::unordered_ma
 				addSizeToEntity( entityClass, entity );
 				addColorToEntity( entityClass, baseClass->second );
 				addChoicesToEntity( entityClass, baseClass->second.fieldsWithChoices );
+				addIOToEntity( entityClass, baseClass->second.inputs, baseClass->second.outputs );
 				addFieldsToEntity( entityClass, baseClass->second.fields );
 				addBaseAttributes( entityClass, entities, baseClass->second );
 			}
@@ -229,6 +249,7 @@ void Eclass_ScanFile_fgd( EntityClassCollector& collector, const char *filename 
 		addSizeToEntity( entityClass, entity );
 		addColorToEntity( entityClass, entity );
 		addChoicesToEntity( entityClass, entity.fieldsWithChoices );
+		addIOToEntity( entityClass, entity.inputs, entity.outputs );
 		addFieldsToEntity( entityClass, entity.fields );
 		addBaseAttributes( entityClass, entities, entity );
 

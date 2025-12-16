@@ -21,12 +21,49 @@
 
 #pragma once
 
+#include <format>
+
 #include "generic/constant.h"
 
 #include "string/string.h"
 #include "scenelib.h"
 
 class EntityClass;
+
+class EntityOutput
+{
+	std::string m_name;
+	std::string m_target;
+	std::string m_input;
+	std::string m_data;
+	float m_delay;
+	int m_numUses;
+public:
+	EntityOutput( const char* name, const char* target, const char* input, const char* data = "", float delay = 0, int numUses = -1 ) : m_name( name ), m_target( target ), m_input( input ), m_data( data ), m_delay( delay ), m_numUses( numUses ) {
+	}
+	EntityOutput( const char* key, const char* value ) : m_name( key ) {
+		// FIXME: why am i doing this C-style?
+		std::string delay, numUses;
+		while ( *value && *value != ',' ) m_target.append( 1, *(value++) );
+		value++;
+		while ( *value && *value != ',' ) m_input.append( 1, *(value++) );
+		value++;
+		while ( *value && *value != ',' ) m_data.append( 1, *(value++) );
+		value++;
+		while ( *value && *value != ',' ) delay.append( 1, *(value++) );
+		value++;
+		while ( *value && *value != ',' ) numUses.append( 1, *(value++) );
+		if ( delay.size() ) m_delay = std::stof( delay ); else m_delay = 0;
+		if ( numUses.size() ) m_numUses = std::stoi( numUses ); else m_numUses = -1;
+	}
+	~EntityOutput() = default;
+	std::string key() const {
+		return m_name;
+	}
+	std::string value() const {
+		return std::format( "{},{},{},{},{}", m_target, m_input, m_data, m_delay, m_numUses );
+	}
+};
 
 typedef Callback<void(const char*)> KeyObserver;
 
@@ -67,6 +104,8 @@ public:
 	virtual bool isContainer() const = 0;
 	virtual void attach( Observer& observer ) = 0;
 	virtual void detach( Observer& observer ) = 0;
+	virtual EntityOutput& addOutput( const char* name, const char* target, const char* input, const char* data = "", float delay = 0, int numUses = -1 ) = 0;
+	virtual EntityOutput& addOutput( const char* key, const char* value ) = 0;
 };
 
 class EntityCopyingVisitor : public Entity::Visitor

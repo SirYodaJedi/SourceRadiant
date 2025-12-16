@@ -128,6 +128,8 @@ public:
 	void ( *free )( EntityClass* );
 
 	EntityClassAttributes m_attributes;
+	EntityClassAttributes m_inputs;
+	EntityClassAttributes m_outputs;
 
 	bool inheritanceResolved;
 	bool sizeSpecified;
@@ -163,6 +165,16 @@ inline const char* EntityClass_valueForKey( const EntityClass& entityClass, cons
 		}
 	}
 	return "";
+}
+
+inline EntityClassAttributePair& EntityClass_insertInput( EntityClass& entityClass, const char* key, const EntityClassAttribute& attribute = EntityClassAttribute() ){
+	entityClass.m_inputs.push_back( EntityClassAttributePair( key, attribute ) );
+	return entityClass.m_inputs.back();
+}
+
+inline EntityClassAttributePair& EntityClass_insertOutput( EntityClass& entityClass, const char* key, const EntityClassAttribute& attribute = EntityClassAttribute() ){
+	entityClass.m_outputs.push_back( EntityClassAttributePair( key, attribute ) );
+	return entityClass.m_outputs.back();
 }
 
 inline EntityClassAttributePair& EntityClass_insertAttribute( EntityClass& entityClass, const char* key, const EntityClassAttribute& attribute = EntityClassAttribute() ){

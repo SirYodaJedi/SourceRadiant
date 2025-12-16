@@ -184,6 +184,10 @@ public:
 						}
 					} else if (string_equal_nocase(e.getKey().data(), "editor")) {
 						// FIXME: do we care about any of this?
+					} else if (string_equal_nocase(e.getKey().data(), "connections")) {
+						for ( auto connection : e ) {
+							Node_getEntity( entity )->addOutput( connection.getKey().data(), connection.getValue().data() );
+						}
 					} else {
 						if (hasSolids && string_equal_nocase(e.getKey().data(), "origin")) {
 							// do nothing
@@ -206,7 +210,12 @@ public:
 			m_element["id"] = m_childID++;
 		}
 		void visit( const char* key, const char* value ) override {
-			m_element[key] = value;
+			if ( string_equal_prefix( key, "On" ) ) {
+				// Source I/O string
+				m_element["connections"].addChild( key, value );
+			} else {
+				m_element[key] = value;
+			}
 		}
 	};
 	class MapVMFWalker : public scene::Traversable::Walker

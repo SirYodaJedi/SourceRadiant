@@ -406,6 +406,9 @@ private:
 	typedef UnsortedMap<Key, KeyValuePtr> KeyValues;
 	KeyValues m_keyValues;
 
+	typedef std::list<EntityOutput> Outputs;
+	Outputs m_outputs;
+
 	typedef UnsortedSet<Observer*, true> Observers;
 	Observers m_observers;
 
@@ -613,6 +616,10 @@ public:
 		{
 			visitor.visit( key.c_str(), value->c_str() );
 		}
+		for ( const auto& output : m_outputs )
+		{
+			visitor.visit( output.key().c_str(), output.value().c_str() );
+		}
 	}
 	void setKeyValue( const char* key, const char* value ) override {
 		if ( string_empty( value )
@@ -639,6 +646,16 @@ public:
 
 	bool isContainer() const override {
 		return m_isContainer;
+	}
+
+	EntityOutput& addOutput( const char* name, const char* target, const char* input, const char* data = "", float delay = 0, int numUses = -1 ) {
+		m_outputs.push_back( EntityOutput( name, target, input, data, delay, numUses ) );
+		return m_outputs.back();
+	}
+
+	EntityOutput& addOutput( const char* key, const char* value ) {
+		m_outputs.push_back( EntityOutput( key, value ) );
+		return m_outputs.back();
 	}
 };
 
