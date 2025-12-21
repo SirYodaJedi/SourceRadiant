@@ -124,7 +124,9 @@ static void addFlagsToEntity( EntityClass* entityClass, const std::vector<toolpp
 	for ( const auto& field : fields ) {
 		for ( const auto& flag : field.flags ) {
 			const size_t bit = std::log2( flag.value );
-			strncpy( entityClass->flagnames[bit], flag.displayName.data(), std::size( entityClass->flagnames[bit] ) - 1 );
+			// ASSERT_MESSAGE( bit < MAX_FLAGS, "invalid flag bit" );
+			// ASSERT_MESSAGE( entityClass->flagNames[bit].empty(), "non-unique flag bit" );
+			entityClass->flagNames[bit] = flag.displayName;
 			EntityClassAttribute *attribute = &EntityClass_insertAttribute( *entityClass, field.name.data(), EntityClassAttribute( "flag", field.name.data() ) ).second;
 			entityClass->flagAttributes[bit] = attribute;
 			attribute->m_displayName = field.displayName;
@@ -215,7 +217,7 @@ static void addBaseAttributes( EntityClass* entityClass, const std::unordered_ma
 				addChoicesToEntity( entityClass, baseClass->second.fieldsWithChoices );
 				addIOToEntity( entityClass, baseClass->second.inputs, baseClass->second.outputs );
 				addFieldsToEntity( entityClass, baseClass->second.fields );
-				// addFlagsToEntity( entityClass, baseClass->second.fieldsWithFlags );
+				addFlagsToEntity( entityClass, baseClass->second.fieldsWithFlags );
 				addBaseAttributes( entityClass, entities, baseClass->second );
 			}
 		}
@@ -265,7 +267,7 @@ void Eclass_ScanFile_fgd( EntityClassCollector& collector, const char *filename 
 		addChoicesToEntity( entityClass, entity.fieldsWithChoices );
 		addIOToEntity( entityClass, entity.inputs, entity.outputs );
 		addFieldsToEntity( entityClass, entity.fields );
-		// addFlagsToEntity( entityClass, entity.fieldsWithFlags );
+		addFlagsToEntity( entityClass, entity.fieldsWithFlags );
 		addBaseAttributes( entityClass, entities, entity );
 
 		g_EntityClassFGD_classes.insert( EntityClasses::value_type( entityClass->name(), entityClass ) );

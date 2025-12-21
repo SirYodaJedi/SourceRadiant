@@ -119,7 +119,7 @@ public:
 	Shader* m_state_blend;
 
 	CopiedString m_comments;
-	char flagnames[MAX_FLAGS][32];
+	CopiedString flagNames[MAX_FLAGS];
 	const EntityClassAttribute* flagAttributes[MAX_FLAGS];
 
 	CopiedString m_modelpath;
@@ -270,7 +270,6 @@ inline EntityClass* Eclass_Alloc(){
 	e->has_angles = false;
 	e->has_angles_key = false;
 	e->has_direction_key = false;
-	memset( e->flagnames, 0, sizeof( e->flagnames ) );
 	memset( e->flagAttributes, 0, sizeof( e->flagAttributes ) );
 
 	e->maxs = Vector3(-1,-1,-1 );

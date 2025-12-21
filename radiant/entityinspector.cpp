@@ -921,7 +921,7 @@ void SpawnFlags_setEntityClass( EntityClass* eclass ){
 	// do a first pass to count the spawn flags, don't touch the widgets, we don't know in what state they are
 	for ( int i = 0; i < MAX_FLAGS; ++i )
 	{
-		if ( !string_empty( eclass->flagnames[i] ) ) {
+		if ( !eclass->flagNames[i].empty() ) {
 			spawn_table[g_spawnflag_count++] = i;
 		}
 		// hide all boxes
@@ -930,10 +930,8 @@ void SpawnFlags_setEntityClass( EntityClass* eclass ){
 
 	for ( int i = 0; i < g_spawnflag_count; ++i )
 	{
-		const auto str = StringStream<16>( LowerCase( eclass->flagnames[spawn_table[i]] ) );
-
 		QCheckBox *check = g_entitySpawnflagsCheck[i];
-		check->setText( str.c_str() );
+		check->setText( eclass->flagNames[spawn_table[i]].c_str() );
 		check->show();
 
 		if( const EntityClassAttribute* attribute = eclass->flagAttributes[spawn_table[i]] ){
@@ -1296,19 +1294,6 @@ QWidget* EntityInspector_constructWindow( QWidget* toplevel ){
 		auto *vbox = new QVBoxLayout( containerWidget );
 		vbox->setContentsMargins( 0, 0, 0, 0 );
 		{
-			// Spawnflags (4 colums wide max, or window gets too wide.)
-			auto *grid = g_spawnflagsTable = new QGridLayout;
-			grid->setAlignment( Qt::AlignmentFlag::AlignLeft );
-			vbox->addLayout( grid );
-			for ( int i = 0; i < MAX_FLAGS; ++i )
-			{
-				auto *check = g_entitySpawnflagsCheck[i] = new QCheckBox;
-				grid->addWidget( check, i / 4, i % 4 );
-				check->hide();
-				QObject::connect( check, &QAbstractButton::clicked, EntityInspector_applySpawnflags );
-			}
-		}
-		{
 			// key/value list
 			auto *tree = g_entprops_store = new QTreeWidget;
 			tree->setColumnCount( 2 );
@@ -1429,10 +1414,27 @@ QWidget* EntityInspector_constructWindow( QWidget* toplevel ){
 		splitter->addWidget( scroll );
 
 		auto *containerWidget = new QWidget; // Adding a QLayout to a QScrollArea is not supported, use proxy widget
-		g_attributeBox = new QGridLayout( containerWidget );
+		auto *vbox = new QVBoxLayout( containerWidget );
+
+		// attributes list
+		g_attributeBox = new QGridLayout;
 		g_attributeBox->setAlignment( Qt::AlignmentFlag::AlignTop );
 		g_attributeBox->setColumnStretch( 0, 111 );
 		g_attributeBox->setColumnStretch( 1, 333 );
+		vbox->addLayout( g_attributeBox );
+
+		// spawnflags list
+		g_spawnflagsTable = new QGridLayout;
+		g_spawnflagsTable->setAlignment( Qt::AlignmentFlag::AlignLeft );
+		for ( int i = 0; i < MAX_FLAGS; ++i )
+		{
+			auto *check = g_entitySpawnflagsCheck[i] = new QCheckBox;
+			g_spawnflagsTable->addWidget( check, i, 0 );
+			check->hide();
+			QObject::connect( check, &QAbstractButton::clicked, EntityInspector_applySpawnflags );
+		}
+		vbox->addLayout( g_spawnflagsTable );
+
 		scroll->setWidget( containerWidget ); // widget's layout must be set b4 this!
 	}
 	{
