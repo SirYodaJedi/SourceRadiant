@@ -1003,7 +1003,7 @@ protected:
 		else if ( press == MousePresses::Left || press == MousePresses::Right ) {
 			m_modBro.tracking_MouseDown();
 			if ( press == MousePresses::Left ) {
-				m_modBro.testSelect( event->x() * m_scale, event->y() * m_scale );
+				m_modBro.testSelect( event->position().x() * m_scale, event->position().y() * m_scale );
 			}
 		}
 	}
