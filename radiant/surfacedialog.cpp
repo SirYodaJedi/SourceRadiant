@@ -1274,6 +1274,9 @@ public:
 		case eColBack:
 			return PatchEdgeIter( *this, eRowBack );
 		}
+		// should never get here, but fixes a warning
+		// same as m_type == eRowForward
+		return PatchEdgeIter( *this, eColBack );
 	}
 };
 
