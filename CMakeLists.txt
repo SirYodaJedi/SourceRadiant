@@ -485,6 +485,13 @@ target_link_libraries(sourcemodel PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::S
 target_link_libraries(sourcemodel PRIVATE sourcepp::mdlpp)
 set_target_properties(sourcepp_mdlpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
+add_module(mapq3
+	SOURCES
+		${PROJECT_SOURCE_DIR}/plugins/mapq3/parse.cpp
+		${PROJECT_SOURCE_DIR}/plugins/mapq3/plugin.cpp
+		${PROJECT_SOURCE_DIR}/plugins/mapq3/write.cpp
+)
+
 add_module(mapvmf
 	SOURCES
 		${PROJECT_SOURCE_DIR}/plugins/mapvmf/plugin.cpp
