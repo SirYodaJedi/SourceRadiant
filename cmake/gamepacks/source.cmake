@@ -85,7 +85,7 @@ add_gamepack(episodic
 	HAS_BASEGAME
 	BASE_TITLE "Half-Life 2"
 	BASE_GAMEDIR "hl2"
-	TITLE "Half-Life 2"
+	TITLE "Half-Life 2: Episode One"
 	KNOWN_GAMEDIRS "episodic"
 	KNOWN_TITLES "Half-Life 2: Episode One"
 	PATH_WIN32 "C:/Program Files (x86)/Steam/steamapps/common/Half-Life 2/"
@@ -102,7 +102,7 @@ add_gamepack(ep2
 	HAS_BASEGAME
 	BASE_TITLE "Half-Life 2"
 	BASE_GAMEDIR "hl2"
-	TITLE "Half-Life 2"
+	TITLE "Half-Life 2: Episode Two"
 	KNOWN_GAMEDIRS "ep2"
 	KNOWN_TITLES "Half-Life 2: Episode Two"
 	PATH_WIN32 "C:/Program Files (x86)/Steam/steamapps/common/Half-Life 2/"
@@ -119,7 +119,7 @@ add_gamepack(lostcoast
 	HAS_BASEGAME
 	BASE_TITLE "Half-Life 2"
 	BASE_GAMEDIR "hl2"
-	TITLE "Half-Life 2"
+	TITLE "Half-Life 2: Lost Coast"
 	KNOWN_GAMEDIRS "lostcoast"
 	KNOWN_TITLES "Half-Life 2: Lost Coast"
 	PATH_WIN32 "C:/Program Files (x86)/Steam/steamapps/common/Half-Life 2/"
