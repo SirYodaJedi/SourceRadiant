@@ -68,6 +68,8 @@ function(add_gamepack name)
   no_bsp_monitor="1"
   no_autocaulk="1"
   no_outputs="0"
+  mapextension=".vmf"
+  mapbackupextension=".vmx"
   use_new_output_separator="$<TARGET_PROPERTY:USE_NEW_OUTPUT_SEPARATOR>"
   shader_caulk = "materials/tools/toolsskip"
   shader_trigger = "materials/tools/toolstrigger"
