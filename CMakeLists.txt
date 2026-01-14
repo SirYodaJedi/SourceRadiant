@@ -428,6 +428,13 @@ function(add_module name)
 	)
 endfunction()
 
+add_module(archivepak
+	SOURCES
+		${PROJECT_SOURCE_DIR}/plugins/archivepak/archive.cpp
+		${PROJECT_SOURCE_DIR}/plugins/archivepak/pak.cpp
+		${PROJECT_SOURCE_DIR}/plugins/archivepak/plugin.cpp
+)
+
 add_module(archivevpk
 	SOURCES
 		${PROJECT_SOURCE_DIR}/plugins/archivevpk/archive.cpp
@@ -442,6 +449,13 @@ add_module(archivezip
 		${PROJECT_SOURCE_DIR}/plugins/archivezip/pkzip.cpp
 		${PROJECT_SOURCE_DIR}/plugins/archivezip/plugin.cpp
 		${PROJECT_SOURCE_DIR}/plugins/archivezip/zlibstream.cpp
+)
+
+add_module(archivewad
+	SOURCES
+		${PROJECT_SOURCE_DIR}/plugins/archivewad/archive.cpp
+		${PROJECT_SOURCE_DIR}/plugins/archivewad/plugin.cpp
+		${PROJECT_SOURCE_DIR}/plugins/archivewad/wad.cpp
 )
 
 add_module(entity
@@ -496,6 +510,21 @@ add_module(imagevtf
 )
 target_link_libraries(imagevtf PRIVATE sourcepp::vtfpp)
 set_target_properties(sourcepp_vtfpp sourcepp_compression PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+add_module(imagehl
+	SOURCES
+		${PROJECT_SOURCE_DIR}/plugins/imagehl/hlw.cpp
+		${PROJECT_SOURCE_DIR}/plugins/imagehl/imagehl.cpp
+		${PROJECT_SOURCE_DIR}/plugins/imagehl/mip.cpp
+		${PROJECT_SOURCE_DIR}/plugins/imagehl/sprite.cpp
+)
+
+add_module(imageq2
+	SOURCES
+		${PROJECT_SOURCE_DIR}/plugins/imageq2/imageq2.cpp
+		${PROJECT_SOURCE_DIR}/plugins/imageq2/wal.cpp
+		${PROJECT_SOURCE_DIR}/plugins/imageq2/wal32.cpp
+)
 
 if(RADIANT_USE_ASSIMP)
 	add_module(assmodel
